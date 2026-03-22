@@ -1,12 +1,12 @@
-# bd-wasm-module-template
+# Desktopr wasm-module-template
 
-📦 **Template repository** to create **WebAssembly (WASI)** modules compatible with [Bubbledesk](https://bubbledesk.app).
+📦 **Template repository** to create **WebAssembly (WASI)** modules compatible with [Desktopr](https://desktopr.app).
 
-This repo contains the basic structure to develop, test, and build `.wasm` modules to be used inside the **Bubbledesk sandbox** (`bd_sandbox_call`).
+This repo contains the basic structure to develop, test, and build `.wasm` modules to be used inside the **Desktopr sandbox** (`bd_sandbox_call`).
 
 
-Bubbledesk’s **Plugins** provides a secure, sandboxed and flexible runtime for executing [WebAssembly (WASM)](https://webassembly.org/) plugins within the desktop wrapper.  
-This allows developers to extend app capabilities and Bubbledesk to release features without forcing new builds.
+Desktopr’s **Plugins** provides a secure, sandboxed and flexible runtime for executing [WebAssembly (WASM)](https://webassembly.org/) plugins within the desktop wrapper.  
+This allows developers to extend app capabilities and Desktopr to release features without forcing new builds.
 
 ## Overview
 
@@ -17,7 +17,7 @@ The runtime isolates every execution, providing:
 - **JSON-based communication**
 - **Cross-platform consistency (macOS, Windows, Linux)**
 
-Workers are managed via the JavaScript bridge at `window.Bubbledesk.worker`.
+Workers are managed via the JavaScript bridge at `window.Desktopr.worker`.
 
 
 ## Architecture
@@ -26,7 +26,7 @@ The system is composed of three layers:
 
 | Layer | Language | Responsibility |
 |--------|-----------|----------------|
-| **Frontend** | JavaScript or TypeScript | Provides the API under `window.Bubbledesk.worker` |
+| **Frontend** | JavaScript or TypeScript | Provides the API under `window.Desktopr.worker` |
 | **Backend Host** | Rust + Tauri | Manages worker lifecycle, WASM validation, job queueing, and communication |
 | **Execution Layer (Web Worker)** | JavaScript + [WASM](https://webassembly.org/) | Executes the loaded WebAssembly module and streams stdout/stderr |
 
@@ -38,7 +38,7 @@ The communication protocol is **line-delimited JSON**:
 
 ### Input (from host → plugin)
 
-The Bubbledesk sandbox passes JSON via **stdin**:
+The Desktopr sandbox passes JSON via **stdin**:
 
 ```json
 { "fn": "add", "args": [3, 5] }
@@ -132,9 +132,9 @@ dist/math.wasm
 
 ## Develop a Plugin
 
-1. Fork the [`bd-wasm-module-template`](https://github.com/Bubbledesk/bd-wasm-module-template) repo from Bubbledesk's GitHub:
+1. Fork the [`bd-wasm-module-template`](https://github.com/Desktopr/bd-wasm-module-template) repo from Desktopr's GitHub:
     ```url
-    https://github.com/Bubbledesk/bd-wasm-module-template
+    https://github.com/Desktopr/bd-wasm-module-template
     ```
 
 1. Copy the `module-template` folder with a new name:
@@ -147,20 +147,20 @@ dist/math.wasm
     ```bash
     npm run build -- my-new-module
     ```
-5. You can load `dist/my-new-module.wasm` into your Bubbledesk app with:
+5. You can load `dist/my-new-module.wasm` into your Desktopr app with:
     ```ts
-    await window.Bubbledesk.worker.modules.add("moduleName");
+    await window.Desktopr.worker.modules.add("moduleName");
     ```
     then select `dist/my-new-module.wasm`.
 
 6. You can list loaded modules with:
 
     ```ts
-    await window.Bubbledesk.worker.modules.list();
+    await window.Desktopr.worker.modules.list();
     ```
 7. You can call it like this:
     ```js
-    const res = await window.Bubbledesk.worker.call("moduleName.wasm", {
+    const res = await window.Desktopr.worker.call("moduleName.wasm", {
         fn: "function_name",
         args: [...]
     });
@@ -172,7 +172,7 @@ dist/math.wasm
 
 ### Notes
 
-- Workers are managed via the JavaScript bridge at `window.Bubbledesk.worker`.
+- Workers are managed via the JavaScript bridge at `window.Desktopr.worker`.
 - Keep functions pure and deterministic, without external side effects.
 - Do not use network: it is blocked by the sandbox.
 - Avoid extra stdout/stderr: only the final JSON output should be printed.

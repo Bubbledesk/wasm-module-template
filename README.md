@@ -10,7 +10,7 @@ This allows developers to extend app capabilities and Desktopr to release featur
 
 ## Overview
 
-Each worker runs in its own hidden webview window (`bd-worker`) and executes WASM modules inside a Web Worker environment.
+Each worker runs in its own hidden webview window (`dtr-worker`) and executes WASM modules inside a Web Worker environment.
 The runtime isolates every execution, providing:
 - **File system sandboxing**
 - **Automatic timeout and queue limits**
@@ -132,9 +132,9 @@ dist/math.wasm
 
 ## Develop a Plugin
 
-1. Fork the [`bd-wasm-module-template`](https://github.com/Desktopr/bd-wasm-module-template) repo from Desktopr's GitHub:
+1. Download the [`dtr-wasm-module-template`](https//:wasm-module-template.desktopr.app) repo from:
     ```url
-    https://github.com/Desktopr/bd-wasm-module-template
+    https//:wasm-module-template.desktopr.app
     ```
 
 1. Copy the `module-template` folder with a new name:

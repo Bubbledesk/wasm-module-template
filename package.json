@@ -1,5 +1,5 @@
 {
-  "name": "bd-wasm-modules",
+  "name": "dtr-wasm-modules",
   "scripts": {
     "build": "node build.js"
   },

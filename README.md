@@ -17,7 +17,7 @@ The runtime isolates every execution, providing:
 - **JSON-based communication**
 - **Cross-platform consistency (macOS, Windows, Linux)**
 
-Workers are managed via the JavaScript bridge at `window.Desktopr.worker`.
+Workers are managed via the JavaScript bridge at `Desktopr.worker`.
 
 
 ## Architecture
@@ -26,7 +26,7 @@ The system is composed of three layers:
 
 | Layer | Language | Responsibility |
 |--------|-----------|----------------|
-| **Frontend** | JavaScript or TypeScript | Provides the API under `window.Desktopr.worker` |
+| **Frontend** | JavaScript or TypeScript | Provides the API with the Desktopr Node module ('''npm install desktopr''') |
 | **Backend Host** | Rust + Tauri | Manages worker lifecycle, WASM validation, job queueing, and communication |
 | **Execution Layer (Web Worker)** | JavaScript + [WASM](https://webassembly.org/) | Executes the loaded WebAssembly module and streams stdout/stderr |
 
@@ -149,18 +149,18 @@ dist/math.wasm
     ```
 5. You can load `dist/my-new-module.wasm` into your Desktopr app with:
     ```ts
-    await window.Desktopr.worker.modules.add("moduleName");
+    await Desktopr.worker.modules.add("moduleName");
     ```
     then select `dist/my-new-module.wasm`.
 
 6. You can list loaded modules with:
 
     ```ts
-    await window.Desktopr.worker.modules.list();
+    await Desktopr.worker.modules.list();
     ```
 7. You can call it like this:
     ```js
-    const res = await window.Desktopr.worker.call("moduleName.wasm", {
+    const res = await Desktopr.worker.call("moduleName.wasm", {
         fn: "function_name",
         args: [...]
     });
@@ -172,7 +172,7 @@ dist/math.wasm
 
 ### Notes
 
-- Workers are managed via the JavaScript bridge at `window.Desktopr.worker`.
+- Workers are managed via the JavaScript bridge at `Desktopr.worker`.
 - Keep functions pure and deterministic, without external side effects.
 - Do not use network: it is blocked by the sandbox.
 - Avoid extra stdout/stderr: only the final JSON output should be printed.
